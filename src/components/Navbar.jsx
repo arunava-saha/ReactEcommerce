@@ -5,7 +5,7 @@ import "../App.css";
 
 export const Navbar = () => {
   return (
-    <div className="w-full bg-slate-50 px-9 py-7 h-9 flex text-center items-center justify-between">
+    <div className="w-full fixed top-0 backdrop-blur-sm bg-blur-md bg-transparent border border-b-2 shadow-md px-9 py-7 h-9 flex text-center items-center justify-between">
       <div className="flex w-1/3 justify-center whitespace-nowrap sm:gap-6 gap-4 mx-9">
         <h1>eCommerce</h1>
         <Link to="/">products</Link>
@@ -14,7 +14,7 @@ export const Navbar = () => {
           className="flex text-center items-center gap-2 whitespace-nowrap"
         >
           Add a product
-          <IoMdAdd className="bg-green-500 rounded-lg font-bold  text-black" />
+          <IoMdAdd className=" rounded-lg font-bold  text-black" />
         </Link>
       </div>
       <Link to="/cart" className="text-center  flex gap-4 items-center">
