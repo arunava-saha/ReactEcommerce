@@ -58,19 +58,6 @@ export const addItemIncart = createAsyncThunk(
       } else {
         return rejectWithValue(response.error);
       }
-
-      // // if it doesn't exist create one
-      // if (!check) {
-      //     return fulfillWithValue({
-      //         product: {
-      //             id: getState().cart.products.length + 1 | 1,
-      //             price: product.price,
-      //             title: product.title
-      //         },
-      //         quantity: 1
-      //     })
-      // }
-
       // on error
     } catch (error) {
       throw rejectWithValue(error.message);

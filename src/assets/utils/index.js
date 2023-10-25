@@ -14,6 +14,7 @@ export async function getProducts() {
   return await axios
     .get(`${API_ROOT}/products`)
     .then((res) => {
+      console.log(res.data);
       return {
         success: true,
         data: res.data,
