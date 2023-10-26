@@ -4,16 +4,14 @@ import { deleteProductInDB } from "../features";
 import { toast } from "react-toastify";
 
 // importing MUI component
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
+
 import Rating from "@mui/material/Rating";
 import IconButton from "@mui/material/IconButton";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
-import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
+import { IoTrashBin } from "react-icons/io5";
 
 const Products = (props) => {
   const { products, deleteProductFromlist } = props;
@@ -33,117 +31,136 @@ const Products = (props) => {
   return (
     <>
       {/* Container to display all products */}
-      <Grid
-        container
-        direction="row"
-        spacing={1}
-        textAlign={"center"}
-        justifyContent={"center"}
-      >
+      <div className="flex flex-wrap gap-2 justify-center items-center m-24">
         {/* Looping the displaying products */}
         {products.map((product, index) => {
           return (
             // individual product display starts
-            <Grid item zeroMinWidth xl key={index}>
-              <Box
+            <div
+              key={index}
+              className="w-full max-w-xl h-28 bg-slate-50 p-3 flex"
+            >
+              {/* displays product image starts*/}
+              {/* <CardMedia
+                component="img"
                 sx={{
-                  position: "relative",
-                  width: 300,
-                  height: 350,
-                  mt: 1,
-                  mb: 1,
-                  p: 1,
-                  border: "1px solid black",
+                  height: 200,
+                  objectFit: "contain",
+                  backgroundColor: "#f7f7f7",
                 }}
-              >
-                {/* displays product image starts*/}
-                <CardMedia
-                  component="img"
-                  sx={{
-                    height: 200,
-                    objectFit: "contain",
-                    backgroundColor: "#f7f7f7",
-                  }}
-                  image={product.image || defaultImg}
-                  alt="product.jpg"
-                />
-                {/* displays product image ends*/}
+                image={product.image || defaultImg}
+                alt="product.jpg"
+              /> */}
 
-                {/* delete button starts */}
-                <IconButton
-                  onClick={() => handleDeleteClick(product.id)}
-                  size="large"
-                  sx={{
-                    position: "absolute",
-                    right: 2,
-                    top: 2,
-                    color: "red",
-                  }}
-                >
-                  <DeleteOutlineRoundedIcon fontSize="large" />
-                </IconButton>
-                {/* delete button ends*/}
-
-                {/* current products info starts*/}
+              <div className="flex w-1/2">
                 <Link
                   style={{
                     textDecoration: "none",
                     color: "inherit",
+                    width: "100%",
+                    maxWidth: "200px",
+                    minWidth: "150px",
                   }}
                   to={`/${product.id}`}
                 >
-                  {/* product info  starts*/}
-                  <CardContent
-                    sx={{
-                      flex: "1 0 auto",
-                      textAlign: "left",
-                    }}
-                  >
-                    {/* display title */}
-                    <Typography component="div" variant="h5" noWrap>
-                      {product.title}
-                    </Typography>
+                  <img
+                    src={product.image || defaultImg}
+                    alt="image"
+                    className="w-2/3 h-full"
+                  />
+                </Link>
 
-                    {/* display rating */}
-                    <Typography component="span" variant="h6">
-                      {/* rating star */}
-                      <Rating
-                        precision={0.1}
-                        value={parseInt(product.rating)}
-                        sx={{
-                          ml: 1,
-                          verticalAlign: "sub",
-                          color: "yellowgreen",
-                        }}
-                        emptyIcon={<StarOutlineIcon sx={{ color: "black" }} />}
-                        readOnly
-                      />
-                    </Typography>
-
-                    {/* product price */}
+                <div className="flex flex-col">
+                  {/* display title */}
+                  <h1 className="overflow-hidden">{product.title}</h1>
+                  <p className="text-xs">
                     <Typography
-                      variant="h4"
+                      variant="p"
                       color="text.secondary"
-                      fontWeight={500}
+                      fontWeight={200}
                     >
                       &#8377;{" "}
                       {
                         // formats price upto 2 decimal
                         Intl.NumberFormat("en-US", {
                           maximumFractionDigits: 2,
+                          minimumFractionDigits: 2,
                         }).format(product.price * 30)
                       }
                     </Typography>
-                  </CardContent>
-                  {/* product info section ends */}
-                </Link>
-                {/* current products info  ends*/}
-              </Box>
-            </Grid>
+                  </p>
+                  <p className="mt-5">
+                    {/* display rating */}
+                    <Typography component="span" variant="h6">
+                      {/* rating star */}
+                      <Rating
+                        precision={0.1}
+                        value={product.rating}
+                        sx={{
+                          verticalAlign: "main",
+                          color: "black",
+                        }}
+                        emptyIcon={<StarOutlineIcon sx={{ color: "black" }} />}
+                        readOnly
+                      />
+                    </Typography>
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-col h-full w-1/2 border border-stone-200 hover:shadow-2xl hover:shadow-gray-400 p-2 gap-3">
+                <p className="h-2/3 overflow-hidden flex justify-end">
+                  {product.description}
+                </p>
+                <div className="items-end w-full justify-end flex gap-6">
+                  <button className="relative">
+                    <IconButton
+                      onClick={() => handleDeleteClick(product.id)}
+                      size="small"
+                      sx={{
+                        position: "absolute",
+                        right: 2,
+                        bottom: -20,
+                        color: "black",
+                      }}
+                    >
+                      <IoTrashBin />
+                    </IconButton>
+                  </button>
+                </div>
+              </div>
+              {/* displays product image ends*/}
+
+              {/* delete button starts */}
+              {/* <IconButton
+                onClick={() => handleDeleteClick(product.id)}
+                size="large"
+                sx={{
+                  position: "absolute",
+                  right: 2,
+                  top: 2,
+                  color: "red",
+                }}
+              >
+                <DeleteOutlineRoundedIcon fontSize="large" />
+              </IconButton> */}
+              {/* delete button ends*/}
+
+              {/* current products info starts*/}
+
+              {/* product info  starts*/}
+
+              {/* display title */}
+
+              {/* product price */}
+
+              {/* product info section ends */}
+              {/* current products info  ends*/}
+            </div>
             // individual product display ends
           );
         })}
-      </Grid>
+      </div>
       {/* Container to display all products */}
     </>
   );
